@@ -135,8 +135,28 @@ data5 <- group_by(data, interval)
 data6 <- mutate(data5, steps = impute.mean(steps))
 ```
 
+**Histogram of the total number of steps taken each day after missing values are imputed**
 
 
+```r
+data7 <- group_by(data6, date)
+data8 <- summarize(data7, steps = sum(steps))
+hist(data8$steps, xlab= "No. of steps", ylab = "Frequency", main = "Total No. of Steps per day (imputed missing values)", breaks = 10)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)
+**Calculate and report the mean and median total number of steps taken per day**
+As we can say as compared to the previous data with missing values, both the mean and median has increased after imputing the missing values, and moreover the mean and median are now same.
+
+
+```r
+summary(data8$steps)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    9819   10770   10770   12810   21190
+```
 ## Are there differences in activity patterns between weekdays and weekends?
 
 **Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends**
@@ -153,5 +173,5 @@ data10 <- summarize(data9, mean_steps =  mean(steps))
 xyplot(mean_steps~interval|wDay, layout =c(1,2), data = data10, type = "l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)
 Clearly there is a difference in activity pattern between weekdays and weekends, however the peak activity seems to be around the same time for both weekdays and weekend however, the peaks are more distributed during the weekend compared to weekdays when the peak activity seems to be between 8 and 9 am in the morning.

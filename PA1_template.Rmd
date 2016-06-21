@@ -2,7 +2,7 @@
 title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
-    keep_md: true
+    keep_md: yes
 ---
 #Title: "Assignment 1 for Reproducible Research"
 author: "Sudip Goswami"
@@ -93,8 +93,19 @@ data5 <- group_by(data, interval)
 data6 <- mutate(data5, steps = impute.mean(steps))
 ```
 
+**Histogram of the total number of steps taken each day after missing values are imputed**
 
+```{r echo = TRUE}
+data7 <- group_by(data6, date)
+data8 <- summarize(data7, steps = sum(steps))
+hist(data8$steps, xlab= "No. of steps", ylab = "Frequency", main = "Total No. of Steps per day (imputed missing values)", breaks = 10)
+```
+**Calculate and report the mean and median total number of steps taken per day**
+As we can say as compared to the previous data with missing values, both the mean and median has increased after imputing the missing values, and moreover the mean and median are now same.
 
+```{r echo = TRUE}
+summary(data8$steps)
+```
 ## Are there differences in activity patterns between weekdays and weekends?
 
 **Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends**
